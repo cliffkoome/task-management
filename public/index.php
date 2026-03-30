@@ -5,7 +5,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TaskFlow</title>
-  <link rel="stylesheet" href="/task-management/public/css/style.css"/>
+  <link rel="stylesheet" href="/public/css/style.css"/>
   <script src="https://kit.fontawesome.com/8c27d1b0fd.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -273,10 +273,9 @@
 <!-- Toast -->
 <div id="toast" class="toast"></div>
 
-<!-- Scripts — order matters: api → ui → app -->
-<script src="/task-management/public/js/api.js"></script>
-<script src="/task-management/public/js/ui.js"></script>
-<script src="/task-management/public/js/app.js"></script>
+<script src="/public/js/api.js"></script>
+<script src="/public/js/ui.js"></script>
+<script src="/public/js/app.js"></script>
 
 </body>
 </html>
