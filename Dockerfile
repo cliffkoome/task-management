@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     apache2 \
     php \
     php-mysql \
-    php-pdo \
     libapache2-mod-php \
     && rm -rf /var/lib/apt/lists/*
 
@@ -24,10 +23,14 @@ RUN echo '<Directory /var/www/html>\n\
 </Directory>' > /etc/apache2/conf-available/app.conf \
 && a2enconf app
 
-# Set port
-RUN sed -i 's/Listen 80/Listen ${PORT:-80}/' /etc/apache2/ports.conf
-RUN sed -i 's/<VirtualHost \*:80>/<VirtualHost *:${PORT:-80}>/' /etc/apache2/sites-enabled/000-default.conf
+# Entrypoint script to set port dynamically
+RUN echo '#!/bin/bash\n\
+PORT=${PORT:-80}\n\
+sed -i "s/Listen 80/Listen $PORT/" /etc/apache2/ports.conf\n\
+sed -i "s/<VirtualHost \*:80>/<VirtualHost *:$PORT>/" /etc/apache2/sites-enabled/000-default.conf\n\
+apache2ctl -D FOREGROUND' > /start.sh \
+&& chmod +x /start.sh
 
 EXPOSE 80
 
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["/bin/bash", "/start.sh"]
