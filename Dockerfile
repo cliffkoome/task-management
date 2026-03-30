@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 # Copy project files
+RUN rm -f /var/www/html/index.html
 COPY . /var/www/html/
 
 # Apache config
