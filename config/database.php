@@ -18,7 +18,8 @@ class Database {
         $this->conn = null;
 
         try {
-            $dsn = "mysql:host={$this->host};dbname={$this->db};charset=utf8";
+            $port = getenv('DB_PORT') ?: '3306';
+            $dsn = "mysql:host={$this->host};port={$port};dbname={$this->db};charset=utf8";
             $this->conn = new PDO($dsn, $this->user, $this->pass);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
