@@ -13,8 +13,10 @@ RUN apt-get update && apt-get install -y \
 # Enable rewrite
 RUN a2enmod rewrite
 
+# Remove default Apache page
+RUN rm -rf /var/www/html/*
+
 # Copy project files
-RUN rm -f /var/www/html/index.html
 COPY . /var/www/html/
 
 # Apache config
@@ -24,12 +26,12 @@ RUN echo '<Directory /var/www/html>\n\
 </Directory>' > /etc/apache2/conf-available/app.conf \
 && a2enconf app
 
-# Entrypoint script to set port dynamically
-RUN echo '#!/bin/bash\n\
+# Entrypoint script
+RUN printf '#!/bin/bash\n\
 PORT=${PORT:-80}\n\
 sed -i "s/Listen 80/Listen $PORT/" /etc/apache2/ports.conf\n\
 sed -i "s/<VirtualHost \*:80>/<VirtualHost *:$PORT>/" /etc/apache2/sites-enabled/000-default.conf\n\
-apache2ctl -D FOREGROUND' > /start.sh \
+apache2ctl -D FOREGROUND\n' > /start.sh \
 && chmod +x /start.sh
 
 EXPOSE 80
