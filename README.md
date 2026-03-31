@@ -271,12 +271,3 @@ curl -X DELETE https://task-management-production-616b.up.railway.app/api/tasks/
 # Daily report
 curl "https://task-management-production-616b.up.railway.app/api/tasks/report?date=2026-04-01"
 ```
-
----
-
-## Author
-
-**Clifford**
-Software Engineering Internship — Coding Challenge 2026
-Submitted to: support@cytonn.com
-GitHub: https://github.com/cliffkoome/task-management
